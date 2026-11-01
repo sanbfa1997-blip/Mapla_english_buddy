@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supernova English AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b18;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px;background:linear-gradient(135deg,#17104b,#071c36)}
+header h1{color:#a78bfa;margin:0;font-size:30px}
+header p{color:#b8c4e8}
+.container{padding:18px;max-width:650px;margin:auto}
+.card{background:#151b30;padding:18px;border-radius:16px;margin:15px 0;border:1px solid #303958}
+h2{color:#a78bfa}
+button{background:#7655ed;color:white;border:0;padding:13px 18px;border-radius:10px;margin:5px;cursor:pointer;font-size:15px}
+button:hover{background:#987bff}
+input{width:100%;padding:14px;border-radius:10px;border:0;margin:10px 0}
+#output{background:#0d1325;padding:15px;border-radius:10px;min-height:70px;line-height:1.6}
+.lesson{padding:12px;background:#202944;margin:8px 0;border-radius:10px}
+footer{text-align:center;color:#8995b5;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>✨ SUPERNOVA AI</h1>
+<p>Your Personal English Learning Journey</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>👋 Welcome Learner!</h2>
+<p>Start from zero. Learn English step by step and become confident.</p>
+</div>
+
+<div class="card">
+<h2>🎤 Voice Conversation</h2>
+<button onclick="startVoice()">Start Speaking</button>
+<button onclick="stopVoice()">Stop</button>
+<div id="output">Your conversation will appear here...</div>
+</div>
+
+<div class="card">
+<h2>📚 English Learning</h2>
+<div class="lesson">🌱 Level 1 - Basic English</div>
+<div class="lesson">🌿 Level 2 - Vocabulary</div>
+<div class="lesson">🌳 Level 3 - Grammar</div>
+<div class="lesson">🚀 Level 4 - Speaking Practice</div>
+<div class="lesson">⭐ Level 5 - Advanced English</div>
+</div>
+
+<div class="card">
+<h2>🕰️ Learn English Tenses</h2>
+<div class="lesson"><b>Past:</b> I played cricket.</div>
+<div class="lesson"><b>Present:</b> I play cricket.</div>
+<div class="lesson"><b>Future:</b> I will play cricket.</div>
+</div>
+
+<div class="card">
+<h2>🧠 Daily English Practice</h2>
+<input id="answer" placeholder="Type your English sentence">
+<button onclick="checkSentence()">Check Sentence</button>
+<div id="result"></div>
+</div>
+
+<div class="card">
+<h2>💬 Daily English Words</h2>
+<p>Hello = வணக்கம்</p>
+<p>Beautiful = அழகான</p>
+<p>Confidence = தன்னம்பிக்கை</p>
+<p>Improve = மேம்படுத்து</p>
+</div>
+
+</div>
+
+<footer>Made with ❤️ for English Learners</footer>
+
+<script>
+let recognition;
+
+function startVoice(){
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SpeechRecognition){
+ alert("Please open this app in Google Chrome.");
+ return;
+ }
+ recognition=new SpeechRecognition();
+ recognition.lang="en-IN";
+ recognition.continuous=true;
+ recognition.interimResults=true;
+ recognition.onresult=function(event){
+ let text="";
+ for(let i=0;i<event.results.length;i++){
+ text+=event.results[i][0].transcript+" ";
+ }
+ document.getElementById("output").innerText=text;
+ };
+ recognition.onerror=function(e){
+ document.getElementById("output").innerText="Microphone error: "+e.error;
+ };
+ recognition.start();
+}
+
+function stopVoice(){
+ if(recognition)recognition.stop();
+}
+
+function checkSentence(){
+ let text=document.getElementById("answer").value.trim();
+ document.getElementById("result").innerText=
+ text ? "Good practice! Keep learning: "+text :
+ "Please type a sentence first.";
+}
+</script>
+
+</body>
+</html>
